@@ -1,47 +1,78 @@
-/*
-🌸 𝗦𝗖𝗥𝗜𝗣𝗧 𝗜𝗡𝗙𝗢 🌸  
-┌───────────────────────────────┐
-│ 💫 𝗝𝘂𝗱𝘂𝗹 : Yurii-Md  
-│ 👑 𝗖𝗿𝗲𝗮𝘁𝗼𝗿 : FallZx Infinity  
-│ ⚠️ 𝗡𝗼𝘁𝗲 : Jangan hapus credit ini!  
-│     Hargai creator dengan tetap mencantumkan nama.  
-└───────────────────────────────┘
-✨ Terima kasih telah menggunakan script ini!
-*/
-const fs = require('fs');
-const chalk = require('chalk');
-const { runtime } = require('./function');
-const os = require("os")
+const { cmd } = require("./command"); // කමාන්ඩ් ලියාපදිංචි කරන ෆයිල් එක ලෝඩ් කිරීම
+const moment = require("moment");
 
-exports.menu =  ( isPremium, time, sender, prefix, pushname) => {
+cmd({
+    pattern: "menu",
+    alias: ["help", "list", "panel"],
+    desc: "Get the main professional command menu.",
+    category: "main",
+    react: "📜",
+    filename: __filename
+}, async (client, mek, m, { from, pushname, reply, prefix }) => {
+    try {
+        // වර්තමාන දිනය සහ වේලාව ලබා ගැනීම
+        const currentTime = moment().format("HH:mm:ss");
+        const currentDate = moment().format("YYYY-MM-DD");
 
-return `\n💫 ʏᴜʀɪɪ-ᴍᴅ ʙᴏᴛ ᴍᴇɴᴜ 💫
+        // ඉතාමත් ආකර්ෂණීය සහ පිරිසිදු මෙනු පැනලය
+        const menuTemplate = `
+╭─── 〔 *𝐐𝐔𝐄𝐄𝐍 𝐑𝐎𝐒𝐈 𝐁𝐎𝐓* 〕 ───⤳
+│
+│ 👑 *Owner:* MALITYA
+│ 👤 *User:* ${pushname || "User"}
+│ 🕒 *Time:* ${currentTime}
+│ 📅 *Date:* ${currentDate}
+│ 🕹️ *Prefix:* [ ${prefix || "."} ]
+│
+╰───────────────────────────⤳
 
-ʜᴀʟᴏ~ ꜱᴀʏᴀ ʏᴜʀɪɪ-ᴍᴅ 🤖
-ʙᴏᴛ ɪɴɪ ᴅɪʙᴜᴀᴛ ᴍᴇɴɢɢᴜɴᴀᴋᴀɴ ɴᴏᴅᴇᴊꜱ & ᴊᴀᴠᴀꜱᴄʀɪᴘᴛ
-ᴅɪᴋᴇᴍʙᴀɴɢᴋᴀɴ ᴏʟᴇʜ ᴛᴜᴀɴ ꜰᴀʟʟᴢx ɪɴꜰɪɴɪᴛʏ ⚡
+╭─── 〔 *📥 DOWNLOAD CMD* 〕 ───⤳
+│
+│ 🎵 *${prefix}song* <name/link>
+│    _Download high-quality MP3 audio_
+│
+╰───────────────────────────⤳
 
-━━━━━━━━━━━━━━━━━━
-📜 ɪɴꜰᴏ ʙᴏᴛ
-👤 ᴄʀᴇᴀᴛᴏʀ : ꜰᴀʟʟᴢx ɪɴꜰɪɴɪᴛʏ
-🤖 ᴊᴇɴɪꜱ : ʏᴜʀɪɪ-ᴍᴅ
-🧩 ᴠᴇʀꜱɪᴏɴ : 1.0 ʙᴀꜱᴇꜱ
-⚙️ ᴏᴘᴛɪᴍᴀʟɪꜱᴀꜱɪ : ʜɪɢʜ ᴘᴇʀꜰᴏʀᴍᴀɴᴄᴇ
-━━━━━━━━━━━━━━━━━━
-🎯 ᴍᴇɴᴜ-sɪᴍᴘʟᴇ
-│ ✦ .ᴛɪᴋᴛᴏʟ – ᴅʟ ᴠɪᴅ ᴛᴛ
-│ ✦ .ᴛᴡɪᴛᴛᴇʀᴅʟ – ᴅʟ ᴠɪᴅ x
-│ ✦ .ꜱᴛɪᴄᴋᴇʀ – ᴊᴀᴅɪᴋᴀɴ ꜱᴛɪᴋᴇʀ
-│ ✦ .ǫᴄ – ʙᴜᴀᴛ ǫᴜᴏᴛᴇ-ᴄᴀʀᴅ
-━━━━━━━━━━━━━━━━━━
-\`ᴄᴏᴅᴇᴅ ʙʏ ꜰᴀʟʟᴢx ɪɴꜰɪɴɪᴛʏ ⚡\``
-}
+╭─── 〔 *🎭 CONVERT CMD* 〕 ───⤳
+│
+│ 🖼️ *${prefix}sticker* <reply image>
+│    _Convert images/videos to sticker_
+│
+╰───────────────────────────⤳
 
-let file = require.resolve(__filename);
-fs.watchFile(file, () => {
-    fs.unwatchFile(file);
-    console.log(chalk.yellow(`New ${__filename}`));
-    delete require.cache[file];
-    require(file);
+╭─── 〔 *🔍 UTILITY & INFO* 〕 ───⤳
+│
+│ 🪄 *${prefix}alive*
+│    _Check bot status and uptime_
+│ 🌦️ *${prefix}weather* <city>
+│    _Get real-time weather reports_
+│ 🆔 *${prefix}jid*
+│    _Get current chat or group JID_
+│
+╰───────────────────────────⤳
+
+╭─── 〔 *🧠 FUN & AI CMD* 〕 ───⤳
+│
+│ 💡 *${prefix}fact*
+│    _Get mind-blowing random facts_
+│ ✨ *${prefix}quote*
+│    _Get inspiring life quotes_
+│
+╰───────────────────────────⤳
+
+*ᴘᴀᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟɪʏᴀ 👨‍💻*
+        `.trim();
+
+        const defaultThumb = "https://i.ibb.co/6RPYc2rF/4681.jpg"; // ඔයාගේ බොට්ගේ ප්‍රධාන Image Link එක
+
+        // කිසිදු චැනල් මැසේජ් එකක් (Newsletter label) නැතිව සාමාන්‍ය Image Caption එකක් ලෙස යැවීම
+        await client.sendMessage(from, {
+            image: { url: defaultThumb },
+            caption: menuTemplate
+        }, { quoted: mek });
+
+    } catch (e) {
+        console.error("Error in menu command: ", e);
+        reply("❌ මෙනු පැනලය ලබාදීමේදී දෝෂයක් සිදුවුණා.");
+    }
 });
-process.on('uncaughtException', console.error);
